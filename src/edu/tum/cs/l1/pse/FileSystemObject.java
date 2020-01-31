@@ -4,25 +4,35 @@ import java.util.Arrays;
 
 public abstract class FileSystemObject {
 
-	private final String name;
+    private final String name;
+    private int level;
 
-	public FileSystemObject(String name) {
-		this.name = name;
+    public FileSystemObject(String name, int level) {
+        this.name = name;
+        this.level = level;
+    }
+
+    public FileSystemObject(String name) {
+        this(name, 0);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setLevel(int level){
+    	this.level = level;
 	}
 
-	public String getName() {
-		return name;
-	}
+    private String getLevelPrefix(int level) {
+        char[] charArray = new char[level];
+        Arrays.fill(charArray, '-');
+        return new String(Integer.toString(level));
+    }
 
-	private String getLevelPrefix(int level) {
-		char[] charArray = new char[level];
-		Arrays.fill(charArray, '-');
-		return new String(charArray);
-	}
+    public void printName() {
+        System.out.println(this.getLevelPrefix(this.level) + this.getName());
+    }
 
-	public void printName(int level) {
-		System.out.println(getLevelPrefix(level) + getName());
-	}
-
-	public abstract void list(int level);
+    public abstract void list(int level);
 }
